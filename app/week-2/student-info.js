@@ -5,7 +5,7 @@ export default function StudentInfo() {
       <div>
         <h1>Student Information:</h1>
         <p>Student Name: Simon Luna</p>
-        <Link href={"https://github.com/LunaroySimon"}>Simon's Github Link</Link>
+        <Link href={"https://github.com/LunaroySimon"}>https://github.com</Link>
       </div>
     );
   }
