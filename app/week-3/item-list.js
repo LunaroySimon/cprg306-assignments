@@ -75,11 +75,8 @@ export default function ItemList() {
       };
 
       {
-        /* 
-        Using the Item component to display the data
-        */
-       return (
-            <div>
+        return (
+          <div className="grid grid-cols-2 w-3/4">
             <Item name={item1.name} quantity={item1.quantity} category={item1.category} />
             <Item name={item2.name} quantity={item2.quantity} category={item2.category} />
             <Item name={item3.name} quantity={item3.quantity} category={item3.category} />
@@ -92,7 +89,7 @@ export default function ItemList() {
             <Item name={item10.name} quantity={item10.quantity} category={item10.category} />
             <Item name={item11.name} quantity={item11.quantity} category={item11.category} />
             <Item name={item12.name} quantity={item12.quantity} category={item12.category} />
-        </div>
-       );
+          </div>
+        );
       }
     }
