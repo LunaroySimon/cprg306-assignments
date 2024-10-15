@@ -7,6 +7,7 @@ export default function Page() {
         <p className="text-2xl p-2 hover:text-cyan-600"><Link href="/week-2">Week 2 Assignment Link</Link></p>
         <p className="text-2xl p-2 hover:text-cyan-600"><Link href="/week-3">Week 3 Assignment Link</Link></p>
         <p className="text-2xl p-2 hover:text-cyan-600"><Link href="/week-4">Week 4 Assignment Link</Link></p>
+        <p className="text-2xl p-2 hover:text-cyan-600"><Link href="/week-5">Week 5 Assignment Link</Link></p>
       </main>
     );
   }
