@@ -8,8 +8,8 @@ export default function NewItem() {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        const item = Item(name, quantity, category);
-        console.log(item);
+        const newItem = {name, quantity, category};
+        console.log(newItem);
         alert(`Added item: ${name}, quantity: ${quantity}, category: ${category}`);
         reset();
     };
@@ -35,13 +35,33 @@ export default function NewItem() {
     };
 
     return (
-        <div className="flex justify-center items-center flex-col  bg-green-950 h-32 w-32 rounded-md">
-            <label className=" font-bold text-3xl"> {quantity} </label>
-            <div>
-                <button disabled={quantity === 1} className="m-1 bg-gray-400 text-green-800 rounded-xl h-12 w-12  disabled:bg-black disabled:text-gray-500" onClick={decrement}>-</button>
-                <button disabled={quantity === 20} className="m-1 bg-gray-400 text-green-800 rounded-xl h-12 w-12 disabled:bg-black disabled:text-gray-500"  onClick={increment}>+</button>
+        <form onSubmit={submitHandler} className="flex justify-center items-center flex-col  bg-green-950 p-5 w-full max-w-sm rounded-md">
+            <input type="text" required value={name} onChange={(event) => setName(event.target.value)} placeholder="Item Name" className="m-1 p-1 rounded-md text-black"/>
+            <div className="flex justify-between items-center rounded-md p-4 w-full">
+                <div className="flex justify-between p-2 bg-white text-black rounded-md">
+                    <label className=" font-medium text-2xl mr-5"> {quantity} </label>
+                    <div className="flex">
+                        <button type="button" disabled={quantity === 1} className="mr-1 bg-gray-400 text-green-800 rounded-xl h-8 w-8  disabled:bg-black disabled:text-gray-500" onClick={decrement}>-</button>
+                        <button type="button" disabled={quantity === 20} className="ml-1 bg-gray-400 text-green-800 rounded-xl h-8 w-8 disabled:bg-black disabled:text-gray-500"  onClick={increment}>+</button>
+                    </div>
+                </div>
+                <select value={category} onChange={(event) => setCategory(event.target.value)} className="m-1 p-1 rounded-md text-black">
+                    <option value="produce">Produce</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="bakery">Bakery</option>
+                    <option value="meat">Meat</option>
+                    <option value="frozen foods">Frozen Foods</option>
+                    <option value="canned goods">Canned Goods</option>
+                    <option value="dry goods">Dry Goods</option>
+                    <option value="beverages">Beverages</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="household">Household</option>
+                    <option value="other">Other</option> 
+                </select>
             </div>
-        </div>
+            
+            <button type="submit" className="m-1 bg-gray-400 text-green-800 rounded-xl h-12 w-32 font-semibold">Add Item</button>
+        </form>
     );
     
  }
