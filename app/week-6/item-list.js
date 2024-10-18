@@ -1,95 +1,78 @@
+"use client";
+
 import Item from "./item";
+import itemsJson from "./items.json";
+import { useState } from "react";
 
 export default function ItemList() {
-    
-    const item1 = {
-        name: "milk, 4 L 🥛",
-        quantity: 1,
-        category: "dairy",
-      };
-       
-      const item2 = {
-        name: "bread 🍞",
-        quantity: 2,
-        category: "bakery",
-      };
-       
-      const item3 = {
-        name: "eggs, dozen 🥚",
-        quantity: 2,
-        category: "dairy",
-      };
-       
-      const item4 = {
-        name: "bananas 🍌",
-        quantity: 6,
-        category: "produce",
-      };
-       
-      const item5 = {
-        name: "broccoli 🥦",
-        quantity: 3,
-        category: "produce",
-      };
-       
-      const item6 = {
-        name: "chicken breasts, 1 kg 🍗",
-        quantity: 1,
-        category: "meat",
-      };
-       
-      const item7 = {
-        name: "pasta sauce 🍝",
-        quantity: 3,
-        category: "canned goods",
-      };
-       
-      const item8 = {
-        name: "spaghetti, 454 g 🍝",
-        quantity: 2,
-        category: "dry goods",
-      };
-       
-      const item9 = {
-        name: "toilet paper, 12 pack 🧻",
-        quantity: 1,
-        category: "household",
-      };
-       
-      const item10 = {
-        name: "paper towels, 6 pack",
-        quantity: 1,
-        category: "household",
-      };
-       
-      const item11 = {
-        name: "dish soap 🍽️",
-        quantity: 1,
-        category: "household",
-      };
-       
-      const item12 = {
-        name: "hand soap 🧼",
-        quantity: 4,
-        category: "household",
-      };
+  const [sortBy, setSortBy] = useState("name");
 
-      {
-        return (
-          <div className="grid grid-cols-2 w-3/4">
-            <Item name={item1.name} quantity={item1.quantity} category={item1.category} />
-            <Item name={item2.name} quantity={item2.quantity} category={item2.category} />
-            <Item name={item3.name} quantity={item3.quantity} category={item3.category} />
-            <Item name={item4.name} quantity={item4.quantity} category={item4.category} />
-            <Item name={item5.name} quantity={item5.quantity} category={item5.category} />
-            <Item name={item6.name} quantity={item6.quantity} category={item6.category} />
-            <Item name={item7.name} quantity={item7.quantity} category={item7.category} />
-            <Item name={item8.name} quantity={item8.quantity} category={item8.category} />
-            <Item name={item9.name} quantity={item9.quantity} category={item9.category} />
-            <Item name={item10.name} quantity={item10.quantity} category={item10.category} />
-            <Item name={item11.name} quantity={item11.quantity} category={item11.category} />
-            <Item name={item12.name} quantity={item12.quantity} category={item12.category} />
-          </div>
-        );
+  let items = [...itemsJson]; 
+
+  if (sortBy === "name") {
+    items.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  else if (sortBy === "category") { 
+    items.sort((a, b) => a.category.localeCompare(b.category));
+  } else { 
+    // I definitely used ChatGPT/GitHub Copilot for this part cause I had no idea how to do it
+
+    // sortBy using reduce to group by category and then each group alphabetically and the items within each group alphabetically
+
+    // This groups the items by category using a key-value pair
+    const groupedItems =items.reduce((acc, item) => {
+      if (!acc[item.category]) {
+        acc[item.category] = [];
       }
-    }
+      acc[item.category].push(item);
+      return acc;
+    }, {});
+
+    // Returns an array of the keys (categories) which is then sorted alphabetically
+    const sortedCategories = Object.keys(groupedItems).sort();
+
+    // For each category (key), the objects are spread into an array, sorted alphabetically then pushed into a new array 
+    items = sortedCategories.reduce((acc, category) => {
+      acc.push(...groupedItems[category].sort((a, b) => a.name.localeCompare(b.name)));
+      console.log(...groupedItems[category]);
+      return acc;
+    }, []);
+  }
+
+  const sortByName = () => { 
+    setSortBy("name");
+  };
+
+  const sortByCategory = () => {
+    setSortBy("category");
+   };
+
+   const sortByGroup = () => {
+    setSortBy("group");
+    };
+
+  {
+    // Did the logic for grouping but couldn't figure out how to display it like the example
+    return (
+      <div className="flex flex-col w-full">
+        <div className="flex p-5 justify-around w-1/2  items-center">
+          <label className="text-center w-20 text-xl font-extralight"> Sort By: </label>
+          <button type="button" onClick={sortByName} className={`font-medium text-xl p-1 w-28 h-16 rounded-sm ${sortBy === "name" ? "bg-purple-500" : "bg-purple-800"}`}> Name </button>
+          <button type="button" onClick={sortByCategory} className={`font-medium text-xl p-1 w-28 h-16 rounded-sm ${sortBy === "category" ? "bg-purple-500" : "bg-purple-800"}`}> Category </button>
+          <button type="button" onClick={sortByGroup} className={`font-medium text-xl p-1 w-28 h-16 rounded-sm ${sortBy === "group" ? "bg-purple-500" : "bg-purple-800"}`}> Grouped Category </button>
+        </div>
+        <ul>
+          {items.map((item) => {
+            return (
+              <div key={item.id}>
+                <li>
+                  <Item name={item.name} quantity={item.quantity} category={item.category} />
+                </li>
+              </div>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  }
+}
