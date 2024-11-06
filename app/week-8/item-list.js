@@ -63,7 +63,7 @@ export default function ItemList({items, onItemSelect}) {
         <ul>
           {itemsCopy.map((item) => {
             return (
-              <div key={item.id}>
+              <div key={item.id} className="hover:cursor-pointer">
                 <li>
                   <Item name={item.name} quantity={item.quantity} category={item.category} onSelect={() => onItemSelect(item)}/>
                 </li>
