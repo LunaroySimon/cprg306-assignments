@@ -21,7 +21,7 @@ export default function Page() {
           <div>
             <h1 className="text-2xl m-5">Welcome, {user.displayName}!</h1>
             <p className="ml-5">Email Address: {user.email}</p>
-            <p className="ml-5 text-green-500"><Link href="/week-9/shopping-list">View your shopping list!</Link></p>
+            <p className="ml-5 text-green-500"><Link href="/week-10/shopping-list">View your shopping list!</Link></p>
             <br/>
             <button onClick={logout} className="ml-5">Logout</button>
           </div>
