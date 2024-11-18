@@ -14,8 +14,12 @@ export default function MealIdeas({ ingredient }) {
     };
 
     const loadMealIdeas = async () => { 
+        if(!ingredient) {
+            return;
+        }
+
         const data = await fetchMealIdeas(ingredient);
-        setMeals(data);
+        setMeals(data || []);
     }
 
     useEffect(() => {
@@ -27,7 +31,9 @@ export default function MealIdeas({ ingredient }) {
         <div className="flex flex-col w-full">
             <h2 className="text-2xl font-semibold text-center m-5">Meal Ideas</h2>
             <div className="flex flex-col justify-center">
-                {meals.map((meal) => (
+                {meals.length === 0 && <p className="text-center">No meal ideas found.</p>}
+                {meals.length > 0 && 
+                meals.map((meal) => (
                     <div key={meal.idMeal} className="m-5 p-5 bg-green-800 rounded-md">
                         <h3 className="text-xl font-semibold">{meal.strMeal}</h3>
                     </div>
